@@ -13,14 +13,14 @@ const server = http.createServer((req, res) => {
   }
 
   const pathName = url.parse(req.url, true).pathname;
-  console.log(pathName);
+  const id = url.parse(req.url, true).query.id; // .query(the url queries)
 
   if (pathName === "/products" || pathName === "/") {
     res.writeHead(200, { "content-type": "text/html" });
     res.end("This is the products page!");
-  } else if (pathName === "/laptop") {
+  } else if (pathName === "/laptop" && id < laptopData.length) {
     res.writeHead(404, { "content-type": "text/html" });
-    res.end("This is the laptop page");
+    res.end(`This is the laptop page for laptop ${id}!`);
   } else {
     res.writeHead(404, { "content-type": "text/html" });
     res.end("Url was not found on the server!");
