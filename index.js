@@ -12,11 +12,19 @@ const server = http.createServer((req, res) => {
     return res.end();
   }
 
-  const query = url.parse(req.url, true);
-  console.log(query);
+  const pathName = url.parse(req.url, true).pathname;
+  console.log(pathName);
 
-  res.writeHead(200, { "content-type": "text/html" });
-  res.end("This is the response!");
+  if (pathName === "/products" || pathName === "/") {
+    res.writeHead(200, { "content-type": "text/html" });
+    res.end("This is the products page!");
+  } else if (pathName === "/laptop") {
+    res.writeHead(404, { "content-type": "text/html" });
+    res.end("This is the laptop page");
+  } else {
+    res.writeHead(404, { "content-type": "text/html" });
+    res.end("Url was not found on the server!");
+  }
 });
 
 server.listen(1010, "127.0.0.1", () => {
